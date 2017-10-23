@@ -1,10 +1,7 @@
 /*******************
 VARIABLES
 *******************/
-var closeButton;
-var userActionButton;
-var clickthroughButton;
-var sdkData = null;
+var closeBtn, clickBtn, bannerContainer, video, audioButton, controlButton;
 var adId;
 var rnd;
 var uid;
@@ -12,14 +9,17 @@ var uid;
 /*******************
 INITIALIZATION
 *******************/
-function checkIfAdKitReady(event) {
-    adkit.onReady(initializeCreative);
-}
 
-function initializeCreative() {
-    initializeGlobalVariables();
-    initializeCloseButton();
-    addEventListeners();
+function startAd() {
+    try { //try/catch just in case localPreview.js is not included
+        if (window.localPreview) {
+            window.initializeLocalPreview(); //in localPreview.js
+        }
+    }
+    catch (e) {}
+    initializeGlobalVariables(); 
+    initializeVideoTracking();
+    bannerContainer.style.display = 'block';
 }
 
 function initializeGlobalVariables() {
@@ -27,35 +27,26 @@ function initializeGlobalVariables() {
     rnd = EB._adConfig.rnd;
     uid = EB._adConfig.uid;
 
-    closeButton = document.getElementById("close-button");
-    userActionButton = document.getElementById("user-action-button");
-    clickthroughButton = document.getElementById("click-through-button");
+    closeBtn = document.getElementById("closeBtn");
+    clickBtn = document.getElementById("clickBtn");
+    bannerContainer = document.getElementById("banner");
+    video = document.getElementById("video");
+    audioButton = document.getElementById("audioButton");
+    controlButton = document.getElementById("controlButton");
 
-    sdkData = EB.getSDKData();
-}
-
-function initializeCloseButton() {
-    if (sdkData !== undefined && sdkData !== null && sdkData.SDKType === "MRAID" && EB.API.getCustomVar("mdEnableSDKDefaultCloseButton")) {
-        EB.API.setStyle(closeButton, {
-            display: "none"
-        });
-    } else {
-        EB.API.setStyle(closeButton, {
-            display: "block"
-        });
-    }
-}
-
-function addEventListeners() {
-    closeButton.addEventListener("click", handleCloseButtonClick);
-    userActionButton.addEventListener("click", handleUserActionButtonClick);
-    clickthroughButton.addEventListener("click", handleClickthroughButtonClick);
+    closeBtn.addEventListener("click", handleCloseButtonClick);
+    clickBtn.addEventListener("click", handleClickthroughButtonClick);
     if (EB.API.os.mobile) {
         document.addEventListener((EB.API.os.ios && EB.API.os.ver > 7 ? "touchstart" : "touchmove"), disablePageScrolling);
     }
-}
 
-function creativeContainerReady() {}
+    var mql = window.matchMedia("(orientation: portrait)");
+    handleOrientation(mql);
+    mql.addListener(function(m) {
+        handleOrientation(m);
+    });
+
+}
 
 /*******************
 EVENT HANDLERS
@@ -68,14 +59,74 @@ function handleCloseButtonClick() {
         EB.collapse();
     }, 200);
 }
+function handleOrientation(m) {
+    if(m.matches) {
+        bannerContainer.style.width = adConfig.desktop_expanded_with;
+        bannerContainer.style.height = adConfig.desktop_expanded_height;
+    }
+    else {
+        bannerContainer.style.width = adConfig.desktop_expanded_height;
+        bannerContainer.style.height = adConfig.desktop_expanded_with;
+    }
+}
 
-function handleUserActionButtonClick() {
-    EB.userActionCounter("CustomInteraction");
+function initializeVideoTracking() {
+    videoTrackingModule = new EBG.VideoModule(video);
+
+    controlButton.addEventListener("click", handleControlsButtonClick);
+    audioButton.addEventListener("click", handleAudioButtonClick);
+    
+    video.addEventListener('play',setControlImage);
+    video.addEventListener('pause',setControlImage);
+    video.addEventListener('ended',onVideoEnd);
+    video.addEventListener('volumechange',setAudioImage);
+    
+    setAudioImage();
+    setControlImage();
+    
+    if (adConfig.autoPlayVideos == true) {
+        videoTrackingModule.playVideo(false);
+    }
+}
+
+function setAudioImage(){
+    if(video.muted){
+        audioButton.style.backgroundImage = "url(../_commonAssets/audioOff.png)";
+    }else{
+        audioButton.style.backgroundImage = "url(../_commonAssets/audioOn.png)";
+    }
+}
+function setControlImage(){
+    if(video.paused){
+        controlButton.style.backgroundImage = "url(../_commonAssets/play.png)";
+    }else{
+        controlButton.style.backgroundImage = "url(../_commonAssets/pause.png)";
+    }
+}
+
+function onVideoEnd(){
+    controlButton.style.backgroundImage = "url(../_commonAssets/replay.png)";
+    video.load();
+}
+
+function handleAudioButtonClick() {
+    video.muted = !video.muted;
+}
+
+function handleControlsButtonClick() {
+    if(video.paused){
+        video.play();
+    }else{
+        video.pause();
+    }
+    setControlImage();
 }
 
 function handleClickthroughButtonClick() {
     EB.clickthrough();
 }
+
+
 
 /*******************
 UTILITIES
@@ -173,5 +224,3 @@ window.addEventListener("message", function() {
 /*************************************
 End HTML5 Event System - Do Not Modify
 *************************************/
-
-window.addEventListener("DOMContentLoaded", checkIfAdKitReady);

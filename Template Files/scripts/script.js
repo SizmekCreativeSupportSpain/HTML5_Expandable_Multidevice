@@ -33,8 +33,8 @@ function initializeGlobalVariables() {
     adContainer = document.getElementById("adContainer");
     expandButton = document.getElementById("expandBtn");
 
-    adContainer.style.width = adConfig.contracted_width+"px";
-    adContainer.style.height = adConfig.contracted_height+"px";
+    adContainer.style.width = adConfig.contracted_width;
+    adContainer.style.height = adConfig.contracted_height;
 
     expandButton.addEventListener("click", expand);
     addCustomScriptEventListener("showBanner", showCreativeContents, true);

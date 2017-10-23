@@ -1,9 +1,14 @@
 var adConfig = {
-    "contracted_width": "300",
-    "contracted_height": "250"
+    "contracted_width": "300px",
+    "contracted_height": "250px",
+    "mobile_expanded_with": "320px",
+    "mobile_expanded_height": "480px",
+    "desktop_expanded_with": "800px",
+    "desktop_expanded_height": "600px",
+    "autoPlayVideos": false
 };
 
-////////Funciones comunes, NO ELIMINAR!!!!!!!!////////////////////
+////////Funciones comunes, NO ELIMINAR!!!!!!!!//////////////////////
 
 function checkIfAdKitReady(event) {
 	adkit.onReady(startAd);
@@ -17,4 +22,4 @@ function isTouchDevice()
 
 window.addEventListener("load", checkIfAdKitReady);
 
-///////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////

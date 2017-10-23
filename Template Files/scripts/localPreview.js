@@ -20,13 +20,21 @@ function initializeLocalPreview() {
 		getSDKData: function() {
 			return null;
 		},
-		clickthrough: function() {
+		clickthrough: function(data) {
+			if (data) {
+				console.log('Click:',data);	
+			}else{
+				console.log('Click');
+			}
+			
 			return true;
 		},
-		automaticEventCounter: function() {
+		automaticEventCounter: function(data) {
+			console.log('AutomaticEventCounter',data);
 			return true;
 		},
-		userActionCounter: function() {
+		userActionCounter: function(data) {
+			console.log('UserActionCounter',data);
 			return true;
 		},
 		_sendMessage: function() {
@@ -34,6 +42,10 @@ function initializeLocalPreview() {
 		},
 		expand: function(data) {
 			console.log('Expand',data);
+			return true;
+		},
+		collapse: function(data) {
+			console.log('Collapse');
 			return true;
 		},
 		getCustomVars: function() {

@@ -21,102 +21,141 @@ a img
 /************ 
 TAG STYLES
 ************/
-body
-{
-    margin: 0px;
-    background-color: #0068FF;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
 
 button
 {
-    position: absolute;
-    height: 26px;
-    width: 108px;
-    background-color: white;
-    border: none;
-    color: #0068FF;
-    cursor: pointer;
-    font-family: Arial, sans-serif;
-    font-size: 12px;
-    outline: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-
-button:hover, button:active
-{
-    color: #0D2A4D;
-}
-
-button:active
-{
-    font-size: 11px;
+    cursor: pointer;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
 /************************
 CREATIVE CONTENT STYLES
 ************************/
-#ad-container
+#adContainer
 {
     position: absolute;
-    display: block;
+    top: 0px;
+    left: 0px;
     width: 100%;
     height: 100%;
-    background-color: #0068FF;
-    background-image: url(../images/logo.png);
-    background-position: 10px 10px;
+    display: block;
+    overflow: hidden;
+    background: rgba(0,0,0,.7);
+}
+
+#banner{
+    display: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background-position: center;
+    background-size: 100%;
+    -webkit-transform: translate(-50%,-50%);
+          transform: translate(-50%,-50%);
+}
+
+#closeBtn{
+    position: absolute;
+    display: block;
+    top: 5px;
+    right: 5px;
+    width: 32px;
+    height: 32px;
+    background: url('../../_commonAssets/close.png');
+    background-size: 32px;
+    background-position: center;
     background-repeat: no-repeat;
     overflow: hidden;
+    z-index: 10;
 }
 
-#format-label
-{
-    color: white;
+#clickBtn{
     position: absolute;
-    margin-left: 10px;
-    top: 65px;
+    display: block;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 9;
 }
 
-#close-button
-{
+.video-container {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 74px;
-    display: none;
+    z-index: 10;
 }
 
-#user-action-button
-{
+.video-container video{
+    width: 100%;
+    z-index: 1;
+}
+
+#clickBtn{
     position: absolute;
-    bottom: 10px;
-    right: 128px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 9;
 }
 
-#click-through-button
-{
+#videoClickBtn{
     position: absolute;
-    bottom: 10px;
-    right: 10px;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 10;
 }
 
-/**************************
-MEDIA QUERY SIZING STYLES
-**************************/
-@media (max-height: 295px)
-{
-    #ad-container
-    {
-        background-size: auto 20px;
+.playerButton{
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    background-size: 24px;
+    z-index: 12;
+    /* Preload control images */
+    background-image: url(../../_commonAssets/play.png);
+    background-image: url(../../_commonAssets/pause.png);
+    background-image: url(../../_commonAssets/audioOff.png);
+    background-image: url(../../_commonAssets/audioOn.png);
+    background-image: none;
+    /* End Preload control images */
+}
+
+#audioButton{
+    bottom: 5px;
+    right: 5px;
+}
+#controlButton{
+    bottom: 5px;
+    left: 5px;
+}
+
+@media screen and (orientation:portrait) {
+    #banner{
+        background-image: url('../images/bgPortrait.png');
     }
-
-    #format-label
-    {
-        font-size: 10px;
-        top: 36px;
+    .video-container {
+        width: 300px;
+        top: 140px;
+        left: 10px;
     }
 }
+@media screen and (orientation:landscape) {
+    #banner{
+        background-image: url('../images/bgLandscape.png');
+    }
+    .video-container {
+        width: 420px;
+        bottom: 20px;
+        left: 30px;
+    }
+}
+
