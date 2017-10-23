@@ -36,11 +36,8 @@ function initializeGlobalVariables() {
 
     closeBtn.addEventListener("click", handleCloseButtonClick);
     clickBtn.addEventListener("click", handleClickthroughButtonClick);
-    if (EB.API.os.mobile) {
-        document.addEventListener((EB.API.os.ios && EB.API.os.ver > 7 ? "touchstart" : "touchmove"), disablePageScrolling);
-    }
 
-    var mql = window.matchMedia("(orientation: portrait)");
+    var mql = window.matchMedia("(orientation: landscape)");
     handleOrientation(mql);
     mql.addListener(function(m) {
         handleOrientation(m);
