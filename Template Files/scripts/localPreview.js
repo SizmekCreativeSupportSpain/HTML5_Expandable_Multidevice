@@ -15,6 +15,10 @@ function initializeLocalPreview() {
 		API: {
 			os: {
 				ios: ua.match(/ipod|iphone|ipad/i) !== null
+			},
+			Adaptor: {
+				getCustomVar: function() {return true;},
+				setStyle: function(){return true;}
 			}
 		},
 		getSDKData: function() {
@@ -46,9 +50,6 @@ function initializeLocalPreview() {
 		},
 		collapse: function(data) {
 			console.log('Collapse');
-			return true;
-		},
-		getCustomVars: function() {
 			return true;
 		}
 	};

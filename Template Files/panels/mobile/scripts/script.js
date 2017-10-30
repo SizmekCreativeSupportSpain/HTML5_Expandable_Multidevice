@@ -123,7 +123,7 @@ function handleControlsButtonClick() {
 }
 
 function handleClickthroughButtonClick() {
-    EB.clickthrough();
+    EB.clickthrough('facebook');
 }
 
 

@@ -143,9 +143,9 @@ CREATIVE CONTENT STYLES
         background-image: url('../images/bgPortrait.png');
     }
     .video-container {
-        width: 300px;
+        width: 540px;
         top: 140px;
-        left: 10px;
+        left: 30px;
     }
 }
 @media screen and (orientation:landscape) {
@@ -153,9 +153,9 @@ CREATIVE CONTENT STYLES
         background-image: url('../images/bgLandscape.png');
     }
     .video-container {
-        width: 420px;
-        bottom: 20px;
-        left: 30px;
+        width: 640px;
+        bottom: 130px;
+        left: 80px;
     }
 }
 

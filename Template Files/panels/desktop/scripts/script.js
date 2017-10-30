@@ -103,6 +103,7 @@ function setControlImage(){
 
 function onVideoEnd(){
     controlButton.style.backgroundImage = "url(../_commonAssets/replay.png)";
+    debugger;
     video.load();
 }
 
